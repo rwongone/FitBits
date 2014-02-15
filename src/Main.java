@@ -4,7 +4,7 @@ import java.io.*;
 public class Main {
 	final static String INFILE = "bits";
 	final static String INTERMEDIATE = "intermediate";
-	static String solution = "";
+	static String solution = "Nothing needs to be added.";
 	static int minimum = Integer.MAX_VALUE;
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner sc = new Scanner(new File(INFILE));
@@ -23,7 +23,7 @@ public class Main {
 			bits.add(b);
 		} // now bits are filled
 		
-		query(bits, bits.get(0).a, bits.get(14).a);
+		query(bits, bits.get(0).a, bits.get(1).a);
 
 		sc.close();
 		return;
@@ -49,23 +49,25 @@ public class Main {
 		if (steps > minimum) {
 			return;
 		}
-		Vector<Bit> valid = new Vector<Bit>();
 		if (cur.complements(dest) && steps <= minimum) {
 			solution = path;
 			minimum = steps;
 		}
 		for (int i=0; i<bits.size(); i++) {
-			Bit b = bits.get(i);
-			if (b.n >= 2 && cur.complements(b)) {
-				valid.add(b);
-				bits.remove(b);
+			Bit bit = bits.get(i);
+			int x = 0;
+			if (bit.n >= 2 && cur.complements(bit)) {
+				Bit newBit = new Bit(2); // new instance
+				newBit.a = cur.a;
+				newBit.b = bit.b;
+				String addToPath = bit.toString();
+				bits.remove(bit);
 				i--;
+				x++;
+				BFS(bits, newBit, dest, steps + 1, path + addToPath);
 			}
+			//System.out.println(x);
 		}
-		for (Bit b : valid) {
-			BFS(bits, b, dest, steps + 1, path + b.toString());
-		}
-		
 	}
 	
 	void testA() {
