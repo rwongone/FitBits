@@ -3,10 +3,12 @@ public class Bit { // working with only two-headed bits
 	int n;
 	Fitting a = null;
 	Fitting b = null;
+	Fitting temp = null;
 	public Bit(int n) {
 		this.n = n;
 		this.a = null;
 		this.b = null;
+		this.temp = null;
 	}
 	public void addFitting(Fitting f) {
 		if (a == null) {
@@ -23,7 +25,13 @@ public class Bit { // working with only two-headed bits
 		}
 	}
 	public String toString() {
-		return a.type + " " + a.size + " " + a.gender + " / " + b.type + " " + b.size + " " + b.gender + "\n";
+		if (n == 1) {
+			return a.type + " " + a.size + " " + a.gender;
+		} else if (n >= 2) {
+			return a.type + " " + a.size + " " + a.gender + " / " + b.type + " " + b.size + " " + b.gender;
+		} else {
+			return "invalid";
+		}
 	}
 	public void flip () {
 		//System.out.println("flipping");
@@ -33,6 +41,7 @@ public class Bit { // working with only two-headed bits
 	}
 	public boolean complements (Bit other) {
 		//System.out.println("checking bit complement");
+		
 		if (this.a.complements(other.a)){
 			//System.out.println("a");
 			this.flip();
@@ -47,8 +56,11 @@ public class Bit { // working with only two-headed bits
 			//System.out.println("d");
 			other.flip();
 		} else {
+			//System.out.print("false\n");
 			return false;
 		}
+		//System.out.print("true\n");
+		//System.out.print("Comparing " + this.toString() + " and " + other.toString() + " : \n");
 		return true;
 	}
 }

@@ -9,6 +9,9 @@ public class Fitting {
 		System.out.println(this.size);
 		System.out.println(this.gender);
 	}
+	public String toString() {
+		return this.type + " " + this.size + " " + this.gender;
+	}
 	public boolean complements (Fitting other) {
 		return (this.type.equals(other.type)) && (this.size.equals(other.size)) && (!this.gender.equals(other.gender));
 	}
